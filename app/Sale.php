@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
+    const APROVADO = 1;
+    const CANCELADO = 2;
+    const DEVOLVIDO = 3;
     const STATUS = [
-        1 => 'Aprovado',
-        2 => 'Cancelado',
-        3 => 'Devolvido'
+        self::APROVADO => 'Aprovado',
+        self::CANCELADO => 'Cancelado',
+        self::DEVOLVIDO => 'Devolvido'
     ];
 
     protected $fillable = [
@@ -26,7 +29,7 @@ class Sale extends Model
     }
 
     public function client() {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Client::class);
     }
 
 

@@ -4,6 +4,7 @@
         <a class="" href="{{ url('/') }}">Dashboard de vendas</a> |
         <a class="" href="{{ route('clients.index') }}">Clientes</a> |
         <a class="" href="{{ route('products.index') }}">Produtos</a> |
+        <a class="" href="{{ route('sales.index') }}">Vendas</a>
 
         <!-- User -->
         <ul class="navbar-nav">
