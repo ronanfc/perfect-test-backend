@@ -9,7 +9,7 @@ $factory->define(Product::class, function (Faker $faker) {
     return [
         'name'=> $faker->streetName,
         'description' => $faker->text(100),
-        'price' => $faker->randomFloat(0,20, 200),
+        'price' => $faker->randomFloat(0,100),
         'img_src' => $faker->imageUrl($width = 200, $height = 200)
     ];
 });

@@ -15,7 +15,7 @@ $factory->define(Sale::class, function (Faker $faker) {
         },
         'date_sale' => $faker->date(),
         'qtd_product' => rand(1, 20),
-        'discount' => $faker->randomFloat(0,0, 20),
+        'discount' => $faker->randomFloat(0,0, 100),
         'status' => rand(1, 3)
     ];
 });
