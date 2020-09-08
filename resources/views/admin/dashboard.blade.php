@@ -1,5 +1,7 @@
 @extends('layout')
-
+@section('title')
+    Dashboard
+@endsection
 @section('content')
     <h1>Dashboard de vendas</h1>
     <div class='card mt-3'>

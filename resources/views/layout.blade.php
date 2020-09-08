@@ -10,7 +10,7 @@
             padding: 0;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('/css/jquery.dataTables.css') }}">
 </head>
 <body>
 <!-- NAVBAR TOP -->
@@ -24,7 +24,7 @@
 </div>
 <script src="{{ url('/js/app.js') }}"></script>
 <script src="https://kit.fontawesome.com/d712964458.js" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="{{ url('/js/jquery.dataTables.js') }}"></script>
 <script>
     $(document).ready( function () {
         $('#indexTable').DataTable({
