@@ -8,8 +8,8 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
-        'descricao',
-        'preco'
+        'description',
+        'price'
     ];
     public function sales() {
         return $this->hasMany(Sale::class);

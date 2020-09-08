@@ -104,12 +104,12 @@ class ProductsController extends Controller
     {
         $this->validate($request,[
             'name' =>'required|max:191',
-            'descricao' => 'required|max:191',
-            'preco' => 'required|numeric'
+            'description' => 'required|max:191',
+            'price' => 'required|numeric'
         ], [], [
             'name' => 'Nome',
-            'descricao'  => 'Descrição',
-            'preco' => 'Preço',
+            'description'  => 'Descrição',
+            'price' => 'Preço',
         ]);
 
     }

@@ -6,10 +6,10 @@
 
 <div class="form-group">
     <label for="descricao">Descrição</label>
-    <input class="form-control" id="descricao" name="descricao" type="text" maxlength="191" value="{{old('descricao',$product->descricao)}}" required>
+    <textarea type="text" rows='5' class="form-control" id="description" name="description" required>{{old('descricao',$product->descricao)}}</textarea>
 </div>
 
 <div class="form-group">
-    <label for="preco">Preço</label>
-    <input class="form-control" id="preco" name="preco" type="number" min="0.00" max="100000.00" step="0.01"value="{{old('preco',$product->preco)}}" required />
+    <label for="price">Preço</label>
+    <input class="form-control" id="price" name="price" type="number" min="0.00" max="100000.00" step="0.01" value="{{old('price',$product->price)}}" placeholder="100,00 ou maior" required />
 </div>

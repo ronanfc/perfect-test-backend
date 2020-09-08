@@ -13,6 +13,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Imagem</th>
                     <th>Nome</th>
                     <th>Preço</th>
                     <th>Ação</th>
@@ -22,12 +23,20 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->id }}</td>
+                        <td>
+                            @if(!empty($product->img_src))
+                                <img src="
+                                {{ filter_var($product->img_src, FILTER_VALIDATE_URL)? $product->img_src : asset('products/'.$product->img_src) }}"
+                                     width="50">
+                            @endif
+                        </td>
                         <td>{{ $product->name }}</td>
                         <td>{{'R$ '.number_format($product->preco, 2, ',', '.')}}</td>
                         <td width="22%">
                             <a href="{{route('products.show',['product' => $product->id])}}">Ver</a> |
                             <a href="{{route('products.edit',['product' => $product->id])}}">Editar</a> |
-                            <a href="{{ route('products.destroy',['product' => $product->id]) }}" onclick="event.preventDefault();if(confirm('Deseja excluir este item?')){document.getElementById('form-delete').submit();}">Excluir</a>
+                            <a href="{{ route('products.destroy',['product' => $product->id]) }}"
+                               onclick="event.preventDefault();if(confirm('Deseja excluir este item?')){document.getElementById('form-delete').submit();}">Excluir</a>
                             <form id="form-delete" style="display: none"
                                   action="{{ route('products.destroy',['product' => $product->id]) }}" method="post">
                                 {{csrf_field()}}
@@ -40,5 +49,5 @@
             </table>
         </div>
     </div>
-        {{$products->links()}}
+    {{$products->links()}}
 @endsection
