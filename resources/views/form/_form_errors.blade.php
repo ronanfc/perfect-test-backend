@@ -5,3 +5,9 @@
         @endforeach
     </ul>
 @endif
+
+@if(Session::has('error'))
+    <ul class="alert alert-danger">
+            <li>{{Session::get('error')}}</li>
+    </ul>
+@endif

@@ -17,7 +17,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = \App\Client::paginate(10);
+        $clients = \App\Client::all();
         return view('admin.clients.index', compact('clients'));
     }
 
@@ -41,7 +41,7 @@ class ClientsController extends Controller
     {
         $this->_validate($request);
         Client::create($request->all());
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Cliente criado com sucesso');
     }
 
     /**
@@ -81,7 +81,7 @@ class ClientsController extends Controller
         $this->_validate($request);
         $client->fill($request->all());
         $client->save();
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Cliente atualizado com sucesso');;
     }
 
     /**
@@ -97,7 +97,7 @@ class ClientsController extends Controller
             $sales->delete();
         }
         $client->delete();
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')->with('success', 'Cliente deletado com sucesso');
     }
 
     protected function _validate(Request $request)
@@ -105,7 +105,7 @@ class ClientsController extends Controller
         $this->validate($request,[
             'name' =>'required|max:191',
             'email' => 'required|email|max:191',
-            'cpf' => 'required|max:11'
+            'cpf' => 'required|size:11'
         ], [], [
             'name' => 'Nome',
             'email'  => 'E-mail',

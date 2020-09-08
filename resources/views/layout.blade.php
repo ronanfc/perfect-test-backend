@@ -76,10 +76,14 @@
                     "first": "Início"
                 }
             },
+            "lengthMenu": [
+                [5, 10, 50, 100, -1],
+                [5, 10, 50, 100, "Todos"] // change per page values here
+            ],
             // set the initial value
             "pageLength": 5,
             "order": [
-                [0, "desc"]
+                [1, "desc"]
             ] // set first column as a default sort by asc
         });
 

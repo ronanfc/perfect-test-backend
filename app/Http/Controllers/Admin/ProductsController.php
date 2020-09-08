@@ -15,7 +15,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::all();
         return view('admin.products.index', compact('products'));
     }
 
@@ -40,7 +40,7 @@ class ProductsController extends Controller
         $this->_validate($request);
         $data = $request->all();
         product::create($data);
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Produto criado com sucesso');;
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = product::findOrFail($id);
+        $product = Product::findOrFail($id);
         return view('admin.products.edit', compact('product'));
     }
 
@@ -76,12 +76,12 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = product::findOrFail($id);
+        $product = Product::findOrFail($id);
         $this->_validate($request);
         $data = $request->all();
         $product->fill($data);
         $product->save();
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Produto atualizado com sucesso');;
     }
 
     /**
@@ -97,7 +97,7 @@ class ProductsController extends Controller
             $sales->delete();
         }
         $product->delete();
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'produto deletado com sucesso');
     }
 
     protected function _validate(Request $request)
@@ -105,7 +105,7 @@ class ProductsController extends Controller
         $this->validate($request,[
             'name' =>'required|max:191',
             'description' => 'required|max:191',
-            'price' => 'required|numeric'
+            'price' => 'required|numeric|min:100'
         ], [], [
             'name' => 'Nome',
             'description'  => 'Descrição',

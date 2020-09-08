@@ -5,9 +5,11 @@
     <div class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Tabela de vendas
-                <a href='' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
+                <a class="btn btn-secondary float-right btn-sm rounded-pill" href="{{ route('sales.create') }}"><i class='fa fa-plus'></i> Nova Venda</a>
+            </h5>
             <form method="post" action="{{ route('reportSales') }}">
                 {{csrf_field()}}
+                @include('form._form_errors')
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
                         <div class="input-group">
@@ -15,22 +17,20 @@
                                 <div class="input-group-text">Clientes</div>
                             </div>
                             <select class="form-control" id="inlineFormInputName" name="inlineFormInputName" required>
-                                <option value="">Clientes</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="">Selecione...</option>
+                                @foreach($clients as $client)
+                                    <option value="{{ $client->id }}" {{old('inlineFormInputName', $client->id) == $idClient ? 'selected="selected"': ''}} >{{ $client->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-6 my-1">
-                        <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+                        <label class="sr-only" for="inlineFormInputGroupPeriod">Período</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Período</div>
                             </div>
-                            <input type="text" class="form-control date_range" id="inlineFormInputGroupUsername" name="inlineFormInputGroupUsername" placeholder="Período" required>
+                            <input type="text" class="form-control date_range" id="inlineFormInputGroupPeriod" name="inlineFormInputGroupPeriod" placeholder="Período" required>
                         </div>
                     </div>
                     <div class="col-sm-1 my-1">
@@ -77,6 +77,9 @@
             </table>
         </div>
     </div>
+    @php
+        $status = \App\Sale::STATUS;
+    @endphp
     <div class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Resultado de vendas</h5>
@@ -92,39 +95,19 @@
                         Valor Total
                     </th>
                 </tr>
+                @foreach($resultSales as $resultSale)
                 <tr>
                     <td>
-                        Vendidos
+                        {{ \App\Sale::STATUS[$resultSale->status] }}
                     </td>
                     <td>
-                        100
+                        {{ $resultSale->amount }}
                     </td>
                     <td>
-                        R$ 100,00
+                        {{'R$ '.number_format($resultSale->total, 2, ',', '.')}}
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        Cancelados
-                    </td>
-                    <td>
-                        120
-                    </td>
-                    <td>
-                        R$ 100,00
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Devoluções
-                    </td>
-                    <td>
-                        120
-                    </td>
-                    <td>
-                        R$ 100,00
-                    </td>
-                </tr>
+                @endforeach
             </table>
         </div>
     </div>
