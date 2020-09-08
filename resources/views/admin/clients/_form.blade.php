@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group">
-    <label for="document_number">CPF</label>
-    <input class="form-control" id="cpf" name="cpf" type="number" maxlength="11"
-           value="{{old('cpf',$client->cpf)}}" required>
+    <label for="cpf">CPF</label>
+    <input class="form-control" id="cpf" name="cpf" type="number" minlength="11" maxlength="11" size="11"
+           value="{{old('cpf',$client->cpf)}}" placeholder="Somente números" required>
 </div>

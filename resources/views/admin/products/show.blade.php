@@ -21,7 +21,17 @@
                 <tbody>
                 <tr>
                     <th scope="row">ID</th>
-                    <td>{{$product->id}}</td>
+                    <td>{{$product->id}} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Imagem</th>
+                    <td>
+                        @if(!empty($product->img_src))
+                            <img src="
+                                {{ filter_var($product->img_src, FILTER_VALIDATE_URL)? $product->img_src : asset('products/'.$product->img_src) }}"
+                                 width="100">
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Nome</th>
@@ -29,11 +39,11 @@
                 </tr>
                 <tr>
                     <th scope="row">Descrição</th>
-                    <td>{{$product->descricao}}</td>
+                    <td>{{$product->description}}</td>
                 </tr>
                 <tr>
                     <th scope="row">Preço</th>
-                    <td>{{'R$ '.number_format($product->preco, 2, ',', '.')}}</td>
+                    <td>{{'R$ '.number_format($product->price, 2, ',', '.')}}</td>
                 </tr>
                 </tbody>
             </table>

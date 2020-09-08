@@ -10,7 +10,7 @@ Clientes
             <h5 class="card-title mb-5">
                 <a class="btn btn-secondary float-right btn-sm rounded-pill" href="{{ route('clients.create') }}"><i class='fa fa-plus'></i> Novo Cliente</a>
             </h5>
-            <table class="table table-striped">
+            <table class="table table-striped" id="indexTable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -43,5 +43,4 @@ Clientes
             </table>
         </div>
     </div>
-        {{$clients->links()}}
 @endsection

@@ -9,7 +9,7 @@
             @include('form._form_errors')
             <form method="post" action="{{ route('clients.store') }}">
                 @include('admin.clients._form')
-                <button type="submit" class="btn btn-secondary float-right btn-sm rounded-pill">Criar</button>
+                <button type="submit" class="btn btn-secondary float-right btn-sm rounded-pill">Salvar</button>
             </form>
         </div>
     </div>

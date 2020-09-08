@@ -9,7 +9,7 @@
             <h5 class="card-title mb-5">
                 <a class="btn btn-secondary float-right btn-sm rounded-pill" href="{{ route('products.create') }}"><i class='fa fa-plus'></i> Novo Produto</a>
             </h5>
-            <table class="table table-striped">
+            <table class="table table-striped" id="indexTable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -31,7 +31,7 @@
                             @endif
                         </td>
                         <td>{{ $product->name }}</td>
-                        <td>{{'R$ '.number_format($product->preco, 2, ',', '.')}}</td>
+                        <td>{{'R$ '.number_format($product->price, 2, ',', '.')}}</td>
                         <td width="22%">
                             <a href="{{route('products.show',['product' => $product->id])}}">Ver</a> |
                             <a href="{{route('products.edit',['product' => $product->id])}}">Editar</a> |
@@ -49,5 +49,4 @@
             </table>
         </div>
     </div>
-    {{$products->links()}}
 @endsection
