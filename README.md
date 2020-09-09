@@ -11,6 +11,10 @@
  * DB_USERNAME=root
  * DB_PASSWORD=
  
+ ### PHP
+ ### Habilitar  a extensão
+;extension=php_fileinfo para extension=php_fileinfo
+no php.ini
 
  
  ### Executar comandos

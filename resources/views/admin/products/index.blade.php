@@ -9,6 +9,7 @@
             <h5 class="card-title mb-5">
                 <a class="btn btn-secondary float-right btn-sm rounded-pill" href="{{ route('products.create') }}"><i class='fa fa-plus'></i> Novo Produto</a>
             </h5>
+            @include('form._help_block')
             <table class="table table-striped" id="indexTable">
                 <thead>
                 <tr>
@@ -25,8 +26,7 @@
                         <td>{{ $product->id }}</td>
                         <td>
                             @if(!empty($product->img_src))
-                                <img src="
-                                {{ filter_var($product->img_src, FILTER_VALIDATE_URL)? $product->img_src : asset('products/'.$product->img_src) }}"
+                                <img src="{{ filter_var($product->img_src, FILTER_VALIDATE_URL)? $product->img_src : asset('img/products/'.$product->img_src) }}"
                                      width="50">
                             @endif
                         </td>

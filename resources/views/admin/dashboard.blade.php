@@ -136,7 +136,7 @@
                         <td>
                             @if(!empty($product->img_src))
                                 <img src="
-                                {{ filter_var($product->img_src, FILTER_VALIDATE_URL)? $product->img_src : asset('products/'.$product->img_src) }}"
+                                {{ filter_var($product->img_src, FILTER_VALIDATE_URL)? $product->img_src : asset('img/products/'.$product->img_src) }}"
                                      width="50">
                             @endif
                         </td>

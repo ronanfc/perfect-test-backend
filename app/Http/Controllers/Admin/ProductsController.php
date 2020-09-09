@@ -39,7 +39,35 @@ class ProductsController extends Controller
     {
         $this->_validate($request);
         $data = $request->all();
+
+        $data['img_src'] = $data['img_src_url'];
+
+        if ($request->hasFile('img_src_file') && $request->file('img_src_file')->isValid()) {
+
+            $image = $request->file('img_src_file');
+
+            $nome = $image->getClientOriginalName();
+
+            $extensions = array('jpeg', 'png', 'jpg', 'gif', 'svg', 'JPEG', 'PNG', 'JPG', 'GIF', 'SVG');
+
+            $result = array($request->file('img_src_file')->getClientOriginalExtension());
+
+            if (!in_array($result[0], $extensions)) {
+                Session::flash('erro', 'Arquivo deve ser do tipo: jpeg,png,jpg,gif,svg');
+                return back()->with(['error' => 'Arquivo deve ser do tipo: jpeg,png,jpg,gif,svg']);
+            }
+
+            $nome = strtolower(str_replace(" ", "_", preg_replace("/&([a-z])[a-z]+;/i", "$1", htmlentities(trim($nome)))));
+
+
+            $destinationPath = public_path('/img/products');
+
+            $image->move($destinationPath, $nome);
+            $data['img_src'] = $nome;
+        }
+
         $data['price'] = str_replace(array('.', ','), array('', '.'), $data['price']);
+        dd($data);
         Product::create($data);
         return redirect()->route('products.index')->with('success', 'Produto criado com sucesso');
     }
@@ -80,6 +108,35 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $this->_validate($request);
         $data = $request->all();
+
+        if(!empty($data['img_src_url'])){
+            $data['img_src'] = $data['img_src_url'];
+        }
+
+        if ($request->hasFile('img_src_file') && $request->file('img_src_file')->isValid()) {
+
+            $image = $request->file('img_src_file');
+
+            $nome = $image->getClientOriginalName();
+
+            $extensions = array('jpeg', 'png', 'jpg', 'gif', 'svg', 'JPEG', 'PNG', 'JPG', 'GIF', 'SVG');
+
+            $result = array($request->file('img_src_file')->getClientOriginalExtension());
+
+            if (!in_array($result[0], $extensions)) {
+                Session::flash('erro', 'Arquivo deve ser do tipo: jpeg,png,jpg,gif,svg');
+                return back()->with(['error' => 'Arquivo deve ser do tipo: jpeg,png,jpg,gif,svg']);
+            }
+
+            $nome = strtolower(str_replace(" ", "_", preg_replace("/&([a-z])[a-z]+;/i", "$1", htmlentities(trim($nome)))));
+
+
+            $destinationPath = public_path('/img/products');
+
+            $image->move($destinationPath, $nome);
+            $data['img_src'] = $nome;
+        }
+
         $data['price'] = str_replace(array('.', ','), array('', '.'), $data['price']);
         $product->fill($data);
         $product->save();
@@ -107,11 +164,15 @@ class ProductsController extends Controller
         $this->validate($request,[
             'name' =>'required|max:191',
             'description' => 'required|max:191',
-            'price' => 'required'
+            'price' => 'required',
+            'img_src_url' => 'nullable|string|max:191',
+            'img_src_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ], [], [
             'name' => 'Nome',
             'description'  => 'Descrição',
             'price' => 'Preço',
+            'img_src_file' => 'Imagem',
+            'img_src_url' => 'URL',
         ]);
 
     }

@@ -10,6 +10,7 @@ Clientes
             <h5 class="card-title mb-5">
                 <a class="btn btn-secondary float-right btn-sm rounded-pill" href="{{ route('clients.create') }}"><i class='fa fa-plus'></i> Novo Cliente</a>
             </h5>
+            @include('form._help_block')
             <table class="table table-striped" id="indexTable">
                 <thead>
                 <tr>

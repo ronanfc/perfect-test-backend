@@ -7,7 +7,8 @@
     <div class='card mt-3'>
         <div class='card-body'>
             @include('form._form_errors')
-            <form method="post" action="{{ route('products.store') }}">
+            @include('form._help_block')
+            <form method="post" action="{{ route('products.store') }}" enctype="multipart/form-data">
                 @include('admin.products._form')
                 <button type="submit" class="btn btn-secondary float-right btn-sm rounded-pill">Salvar</button>
             </form>
