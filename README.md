@@ -13,8 +13,12 @@
  
  ### PHP
  ### Habilitar  a extensão
+Verificar  se a extensão fileinfo esta ativa
+``` bash
+ $ php -m
+ ```
+Caso não estaja habilitar no php.ini
 ;extension=php_fileinfo para extension=php_fileinfo
-no php.ini
 
  
  ### Executar comandos
