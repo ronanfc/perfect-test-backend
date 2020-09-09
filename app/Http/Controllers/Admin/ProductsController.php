@@ -67,7 +67,6 @@ class ProductsController extends Controller
         }
 
         $data['price'] = str_replace(array('.', ','), array('', '.'), $data['price']);
-        dd($data);
         Product::create($data);
         return redirect()->route('products.index')->with('success', 'Produto criado com sucesso');
     }

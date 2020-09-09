@@ -23,7 +23,6 @@ class DashboardController extends Controller
      */
     public function dashboard(Request $request)
     {
-//        dd($request->all());
         $idClient = '';
         $products = Product::all();
         $clients = Client::orderBy('name', 'ASC')->get();
