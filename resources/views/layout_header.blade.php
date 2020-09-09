@@ -18,8 +18,8 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class='d-md-down-none'>Albert Einsten</span>
-                    <img class='rounded-pill' src='{{ url("/img/destaque-albert-einstein.jpg") }}' width='40' height='40' alt='Albert Einsten'>
+                    <span class='d-md-down-none'>Ronan Cândido</span>
+                    <img class='rounded-pill' src='{{ url("/img/foto.jpg") }}' width='40' height='40' alt='Ronan Cândido'>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right position-absolute">
                     <div class="dropdown-header">
