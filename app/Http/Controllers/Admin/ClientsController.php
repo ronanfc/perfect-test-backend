@@ -34,7 +34,7 @@ class ClientsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +47,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -59,7 +59,7 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -71,8 +71,8 @@ class ClientsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -87,47 +87,59 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Client $client)
     {
         $sales = $client->sales();
-        if($sales) {
+        if ($sales) {
             $sales->delete();
         }
         $client->delete();
         return redirect()->route('clients.index')->with('success', 'Cliente deletado com sucesso');
     }
 
+    /*
+     * Validação do Formulário de Cadastro e Atualização
+     */
     protected function _validate(Request $request)
     {
-        $this->validate($request,[
-            'name' =>'required|max:191',
+        $this->validate($request, [
+            'name' => 'required|max:191',
             'email' => 'required|email|max:191',
             'cpf' => 'required|size:11'
         ], [], [
             'name' => 'Nome',
-            'email'  => 'E-mail',
+            'email' => 'E-mail',
             'cpf' => 'CPF',
         ]);
 
     }
 
-    public function autoComplete(Request $request) {
+    /*
+     * Buscar clientes já cadastrado para inserção de vendas
+     */
+    public function autoComplete(Request $request)
+    {
 
-        $query = $request->get('term','');
+        $query = $request->get('term', '');
 
-        $queryLike = Client::whereRaw("(name LIKE '%".$query."%')")
+        $queryLike = Client::whereRaw("(name LIKE '%" . $query . "%')")
             ->get();
 
-        $data=array();
+        $data = array();
         foreach ($queryLike as $qlike) {
-            $data[]=array('id'=>$qlike->id, 'value'=>$qlike->name, 'email'=>$qlike->email, 'cpf'=>$qlike->cpf );
+            $data[] = array(
+                                'id' => $qlike->id,
+                                'value' => $qlike->name,
+                                'email' => $qlike->email,
+                                'cpf' => $qlike->cpf
+                           );
         }
-        if(count($data))
+        if (count($data))
             return $data;
         else
-            return ['value'=>'Nenhum cliente encontrado','id'=>''];
+            return ['value' => 'Nenhum cliente encontrado', 'id' => ''];
     }
 }

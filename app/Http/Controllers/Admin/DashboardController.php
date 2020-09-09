@@ -58,6 +58,10 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('sales', 'products', 'clients','resultSales', 'idClient'));
     }
 
+    /*
+     * Validação do Formulário de Cadastro e Atualização
+     */
+
     protected function _validate(Request $request)
     {
         $this->validate($request,[

@@ -32,7 +32,7 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -74,7 +74,7 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -86,7 +86,7 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -98,8 +98,8 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -108,7 +108,7 @@ class ProductsController extends Controller
         $this->_validate($request);
         $data = $request->all();
 
-        if(!empty($data['img_src_url'])){
+        if (!empty($data['img_src_url'])) {
             $data['img_src'] = $data['img_src_url'];
         }
 
@@ -127,6 +127,7 @@ class ProductsController extends Controller
                 return back()->with(['error' => 'Arquivo deve ser do tipo: jpeg,png,jpg,gif,svg']);
             }
 
+            // Remover acentos e espaços do nome da imagem
             $nome = strtolower(str_replace(" ", "_", preg_replace("/&([a-z])[a-z]+;/i", "$1", htmlentities(trim($nome)))));
 
 
@@ -145,30 +146,33 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
         $sales = $product->sales();
-        if($sales) {
+        if ($sales) {
             $sales->delete();
         }
         $product->delete();
         return redirect()->route('products.index')->with('success', 'produto deletado com sucesso');
     }
 
+    /*
+    * Validação do Formulário de Cadastro e Atualização
+    */
     protected function _validate(Request $request)
     {
-        $this->validate($request,[
-            'name' =>'required|max:191',
+        $this->validate($request, [
+            'name' => 'required|max:191',
             'description' => 'required|max:191',
             'price' => 'required',
             'img_src_url' => 'nullable|string|max:191',
             'img_src_file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ], [], [
             'name' => 'Nome',
-            'description'  => 'Descrição',
+            'description' => 'Descrição',
             'price' => 'Preço',
             'img_src_file' => 'Imagem',
             'img_src_url' => 'URL',

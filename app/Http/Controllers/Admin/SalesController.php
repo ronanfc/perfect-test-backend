@@ -39,19 +39,19 @@ class SalesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->_validate($request);
         $data = $request->all();
-        if(empty($data['client_id'])) {
+        if (empty($data['client_id'])) {
             $client = Client::create($request->all());
             $data['client_id'] = $client->id;
         }
 
-        $data['date_sale'] = date( 'Y-m-d' , strtotime($data['date_sale']));
+        $data['date_sale'] = date('Y-m-d', strtotime($data['date_sale']));
         $data['discount'] = str_replace(array('.', ','), array('', '.'), $data['discount']);
         Sale::create($data);
         return redirect()->route('sales.index')->with('success', 'Venda atualizada com sucesso');
@@ -60,7 +60,7 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -72,7 +72,7 @@ class SalesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -85,8 +85,8 @@ class SalesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -94,18 +94,17 @@ class SalesController extends Controller
         $sales = Sale::findOrFail($id);
         $this->_validate($request);
         $data = $request->all();
-        if($sales->client_id == $data['client_id']) {
-            if(($sales->client->nome != $data['name']) ||
+        if ($sales->client_id == $data['client_id']) {
+            if (($sales->client->nome != $data['name']) ||
                 ($sales->client->email != $data['email']) ||
-                ($sales->client->cpf != $data['cpf']))
-            {
+                ($sales->client->cpf != $data['cpf'])) {
                 $sales->client->name = $data['name'];
                 $sales->client->email = $data['email'];
                 $sales->client->cpf = $data['cpf'];
                 $sales->client->save();
             }
         }
-        $data['date_sale'] = date( 'Y-m-d' , strtotime($data['date_sale']));
+        $data['date_sale'] = date('Y-m-d', strtotime($data['date_sale']));
         $data['discount'] = str_replace(array('.', ','), array('', '.'), $data['discount']);
         $sales->fill($data);
         $sales->save();
@@ -115,7 +114,7 @@ class SalesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Sale $sale)
@@ -124,10 +123,13 @@ class SalesController extends Controller
         return redirect()->route('sales.index')->with('success', 'Venda deletada com sucesso');
     }
 
+    /*
+     * Validação do Formulário de Cadastro e Atualização
+     */
     protected function _validate(Request $request)
     {
-        $this->validate($request,[
-            'name' =>'required|max:191',
+        $this->validate($request, [
+            'name' => 'required|max:191',
             'email' => 'required|email|max:191',
             'cpf' => 'required|size:11',
             'product_id' => 'required|numeric',
@@ -137,7 +139,7 @@ class SalesController extends Controller
             'status' => 'required|numeric',
         ], [], [
             'name' => 'Nome',
-            'email'  => 'E-mail',
+            'email' => 'E-mail',
             'cpf' => 'CPF',
             'product_id' => 'Produto',
             'date_sale' => 'Data',
