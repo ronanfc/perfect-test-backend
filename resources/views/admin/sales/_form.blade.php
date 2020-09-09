@@ -3,7 +3,7 @@
 <input type="hidden" id="client_id" name="client_id" value="{{old('client_id',!empty($sale->client_id) ? $sale->client_id : '')}}">
 <div class="form-group">
     <label for="name">Nome do cliente</label>
-    <input class="form-control" id="name" name="name" value="{{old('name', !empty($sale->client->name) ? $sale->client->name : '')}}" autocomplete="off" placeholder="Digite o nome do cliente" required>
+    <input class="form-control" id="name" name="name" value="{{old('name', !empty($sale->client->name) ? $sale->client->name : '')}}" autocomplete="off"  placeholder="Digite o nome do cliente" required>
 </div>
 
 <div class="form-group">
@@ -44,8 +44,8 @@
 
 <div class="form-group">
     <label for="discount">Desconto</label>
-    <input class="form-control" id="discount" name="discount" type="number" min="0.00" max="100.00" step="0.01"
-           value="{{old('price', !empty($sale->discount) ? $sale->discount : '')}}" placeholder="100,00 ou menor" required/>
+    <input class="form-control" id="discount" name="discount" type="text" min="0.00" max="100.00" step="0.01"
+           value="{{old('discount', !empty($sale->discount) ? $sale->discount : '')}}" placeholder="100,00 ou menor" style="text-align:right" required/>
 </div>
 
 @php

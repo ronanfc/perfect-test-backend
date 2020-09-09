@@ -10,6 +10,7 @@ Route::group([
     Route::resource('clients', 'ClientsController');
     Route::resource('products', 'ProductsController');
     Route::resource('sales', 'SalesController');
+    Route::get('searchClient','ClientsController@autoComplete')->name('searchClient');
 });
 
 Route::get('/', 'Admin\DashboardController@dashboard')->name('dashboard');

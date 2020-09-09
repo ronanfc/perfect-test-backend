@@ -11,5 +11,5 @@
 
 <div class="form-group">
     <label for="price">Preço</label>
-    <input class="form-control" id="price" name="price" type="number" min="100.00" max="100000.00" step="0.01" value="{{old('price',$product->price)}}" placeholder="100,00 ou maior" required />
+    <input class="form-control" id="price" name="price" type="text" min="100.00" max="100000.00" step="0.01" value="{{old('price',$product->price)}}" placeholder="100,00 ou maior" style="text-align:right" required />
 </div>

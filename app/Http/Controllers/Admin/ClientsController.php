@@ -113,4 +113,21 @@ class ClientsController extends Controller
         ]);
 
     }
+
+    public function autoComplete(Request $request) {
+
+        $query = $request->get('term','');
+
+        $queryLike = Client::whereRaw("(name LIKE '%".$query."%')")
+            ->get();
+
+        $data=array();
+        foreach ($queryLike as $qlike) {
+            $data[]=array('id'=>$qlike->id, 'value'=>$qlike->name, 'email'=>$qlike->email, 'cpf'=>$qlike->cpf );
+        }
+        if(count($data))
+            return $data;
+        else
+            return ['value'=>'Nenhum cliente encontrado','id'=>''];
+    }
 }

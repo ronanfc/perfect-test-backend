@@ -44,8 +44,17 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->_validate($request);
         $data = $request->all();
-        dd(var_dump($data));
+        if(empty($data['client_id'])) {
+            $client = Client::create($request->all());
+            $data['client_id'] = $client->id;
+        }
+
+        $data['date_sale'] = date( 'Y-m-d' , strtotime($data['date_sale']));
+        $data['discount'] = str_replace(array('.', ','), array('', '.'), $data['discount']);
+        Sale::create($data);
+        return redirect()->route('sales.index')->with('success', 'Venda atualizada com sucesso');
     }
 
     /**
@@ -97,6 +106,7 @@ class SalesController extends Controller
             }
         }
         $data['date_sale'] = date( 'Y-m-d' , strtotime($data['date_sale']));
+        $data['discount'] = str_replace(array('.', ','), array('', '.'), $data['discount']);
         $sales->fill($data);
         $sales->save();
         return redirect()->route('sales.index')->with('success', 'Venda atualizada com sucesso');
@@ -121,9 +131,9 @@ class SalesController extends Controller
             'email' => 'required|email|max:191',
             'cpf' => 'required|size:11',
             'product_id' => 'required|numeric',
-            'date_sale' => 'required|date',
+            'date_sale' => 'required',
             'qtd_product' => 'required|numeric|min:1|max:10',
-            'discount' => 'required|numeric|max:100',
+            'discount' => 'required',
             'status' => 'required|numeric',
         ], [], [
             'name' => 'Nome',

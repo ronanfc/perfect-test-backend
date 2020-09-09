@@ -39,8 +39,9 @@ class ProductsController extends Controller
     {
         $this->_validate($request);
         $data = $request->all();
-        product::create($data);
-        return redirect()->route('products.index')->with('success', 'Produto criado com sucesso');;
+        $data['price'] = str_replace(array('.', ','), array('', '.'), $data['price']);
+        Product::create($data);
+        return redirect()->route('products.index')->with('success', 'Produto criado com sucesso');
     }
 
     /**
@@ -79,6 +80,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $this->_validate($request);
         $data = $request->all();
+        $data['price'] = str_replace(array('.', ','), array('', '.'), $data['price']);
         $product->fill($data);
         $product->save();
         return redirect()->route('products.index')->with('success', 'Produto atualizado com sucesso');;
@@ -105,7 +107,7 @@ class ProductsController extends Controller
         $this->validate($request,[
             'name' =>'required|max:191',
             'description' => 'required|max:191',
-            'price' => 'required|numeric|min:100'
+            'price' => 'required'
         ], [], [
             'name' => 'Nome',
             'description'  => 'Descrição',
